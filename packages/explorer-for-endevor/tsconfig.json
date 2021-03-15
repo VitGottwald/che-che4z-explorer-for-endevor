@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.json",
+  "exclude": ["node_modules", ".vscode-test"],
+  "include": [
+    "src",
+    "test",
+    "mocha-test.run.ts",
+    "vscode-test.run.ts",
+    "../endevor/testUtils.ts"
+  ]
+}

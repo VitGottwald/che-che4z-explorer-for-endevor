@@ -1,0 +1,15 @@
+# See https://github.com/Microsoft/vscode-vsce/issues/12
+# and https://github.com/Microsoft/vscode-mono-debug/blob/master/.vscodeignore
+
+# Ignore everything
+*
+**/*
+**/.DS_Store
+
+# Add what we actually want
+!dist/**
+!resources/**
+!package.json
+!README.md
+!CHANGELOG.md
+!LICENSE

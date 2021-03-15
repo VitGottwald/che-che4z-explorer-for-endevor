@@ -1,0 +1,5 @@
+host: hostname
+port:
+user: username
+password: password
+rejectUnauthorized: false

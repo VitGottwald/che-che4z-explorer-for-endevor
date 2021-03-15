@@ -1,0 +1,74 @@
+defaultProfile: null
+configuration:
+  type: ebg
+  schema:
+    type: object
+    title: 'CA Endevor Bridge for Bridge Profile'
+    description: 'An EBG profile is required to issue commands in the ebg command group. The EBG profile contains the connection details for the CA Endevor Bridge for Git server of your choice.'
+    properties:
+      protocol:
+        type: string
+        optionDefinition:
+          name: protocol
+          aliases:
+            - prot
+          description: "The Endevor Bridge for Git SCM protocol. \n\nDefault value: http"
+          type: string
+          required: true
+          group: "CA Endevor Bridge for Git connection options (alternatively use an 'ebg' profile)"
+          allowableValues:
+            values:
+              - http
+              - https
+            caseSensitive: false
+      host:
+        type: string
+        optionDefinition:
+          name: host
+          aliases:
+            - H
+          description: 'The Endevor Bridge for Git hostname.'
+          type: string
+          required: true
+          group: "CA Endevor Bridge for Git connection options (alternatively use an 'ebg' profile)"
+      port:
+        type: number
+        optionDefinition:
+          name: port
+          aliases:
+            - P
+          description: 'The Endevor Bridge for Git port.'
+          type: number
+          required: true
+          group: "CA Endevor Bridge for Git connection options (alternatively use an 'ebg' profile)"
+      user:
+        type: string
+        secure: true
+        optionDefinition:
+          name: user
+          aliases:
+            - u
+          description: 'Endevor Bridge for Git username (your git username).'
+          type: string
+          required: true
+          group: "CA Endevor Bridge for Git connection options (alternatively use an 'ebg' profile)"
+      token:
+        type: string
+        secure: true
+        optionDefinition:
+          name: token
+          aliases:
+            - t
+          description: 'Git personal access token (it can be obtained from your Git Enterprise Server).'
+          type: string
+          required: true
+          group: "CA Endevor Bridge for Git connection options (alternatively use an 'ebg' profile)"
+      rejectUnauthorized:
+        type: boolean
+        optionDefinition:
+          name: reject-unauthorized
+          aliases:
+            - ru
+          description: "Reject self-signed certificates. \n\nDefault value: false"
+          type: boolean
+          group: "CA Endevor Bridge for Git connection options (alternatively use an 'ebg' profile)"

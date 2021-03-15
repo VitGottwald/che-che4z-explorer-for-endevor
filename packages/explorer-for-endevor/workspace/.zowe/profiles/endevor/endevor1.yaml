@@ -1,0 +1,6 @@
+host: localhost
+port: 12345
+user: username
+password: password
+rejectUnauthorized: false
+protocol: http

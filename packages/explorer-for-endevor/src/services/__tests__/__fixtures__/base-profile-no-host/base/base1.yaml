@@ -1,0 +1,3 @@
+user: no-host-user
+password: no-host-password
+rejectUnauthorized: false

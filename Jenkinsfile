@@ -58,15 +58,26 @@ pipeline {
                 }
             }
         }
-        stage('Package') {
+        stage('Test') {
+            environment {
+                npm_config_cache = "$env.WORKSPACE"
+            }
+            steps {
+                container('node') {
+                    sh "npm run test"
+                }
+            }
+        }
+        stage('Build') {
             environment {
                 npm_config_cache = "$env.WORKSPACE"                
             }
             steps {
                 container('node') {
-                    sh "npx vsce package"
-                    archiveArtifacts "*.vsix"        
-                    sh "mv *$projectName*.vsix '$projectName'_latest.vsix"
+                    sh "npm run build"
+                    // sh "npx vsce package"
+                    // archiveArtifacts "*.vsix"        
+                    // sh "mv *$projectName*.vsix '$projectName'_latest.vsix"
                 }
             }
         }

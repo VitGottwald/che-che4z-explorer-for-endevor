@@ -1,0 +1,68 @@
+// See https://go.microsoft.com/fwlink/?LinkId=733558
+// for the documentation about the tasks.json format
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "tsc:watch",
+      "isBackground": true,
+      "problemMatcher": {
+        "base": "$tsc-watch",
+        "owner": "typescript-strict-null",
+        "applyTo": "allDocuments"
+      },
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    },
+    {
+      "label": "build dev watch",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "isBackground": true,
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "watch"],
+      "problemMatcher": [
+        {
+          "owner": "typescript",
+          "source": "ts",
+          "applyTo": "closedDocuments",
+          "fileLocation": "absolute",
+          "severity": "error",
+          "pattern": [
+            {
+              "regexp": "\\[tsl\\] ERROR in (.*)?\\((\\d+),(\\d+)\\)",
+              "file": 1,
+              "line": 2,
+              "column": 3
+            },
+            {
+              "regexp": "\\s*TS\\d+:\\s*(.*)",
+              "message": 1
+            }
+          ],
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": {
+              "regexp": "Compilation starting…"
+            },
+            "endsPattern": {
+              "regexp": "Compilation finished"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "npm",
+      "script": "eslint:watch",
+      "problemMatcher": ["$eslint-stylish"],
+      "label": "npm: eslint",
+      "detail": "Run eslint in watch mode"
+    }
+  ]
+}

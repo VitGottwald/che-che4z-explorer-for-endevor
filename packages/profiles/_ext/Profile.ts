@@ -1,0 +1,101 @@
+import { SessConstants } from '@zowe/imperative';
+import * as t from 'io-ts';
+import {
+  EndevorServiceProtocol,
+  EndevorStageNumber,
+} from '@local/endevor/_doc/Endevor';
+
+export enum ProfileTypes {
+  BASE = 'base',
+  ENDEVOR = 'endevor',
+  ENDEVOR_LOCATION = 'endevor-location',
+  BFG = 'ebg',
+}
+
+export type Profile = t.TypeOf<typeof Profile>;
+
+export type BaseProfile = t.TypeOf<typeof BaseProfile>;
+
+export type EndevorServiceProfile = t.TypeOf<typeof EndevorServiceProfile>;
+export type EndevorServiceProfiles = t.TypeOf<typeof EndevorServiceProfiles>;
+
+export type EndevorLocationProfile = t.TypeOf<typeof EndevorLocationProfile>;
+export type EndevorLocationProfiles = t.TypeOf<typeof EndevorLocationProfiles>;
+
+class TokenType extends t.Type<SessConstants.TOKEN_TYPE_CHOICES> {
+  constructor() {
+    super(
+      'Token',
+      (value): value is SessConstants.TOKEN_TYPE_CHOICES =>
+        value === SessConstants.TOKEN_TYPE_APIML ||
+        value === SessConstants.TOKEN_TYPE_JWT ||
+        value === SessConstants.TOKEN_TYPE_LTPA,
+      (value, context) =>
+        this.is(value) ? t.success(value) : t.failure(value, context),
+      (value) => value
+    );
+  }
+}
+
+export const BaseProfile = t.partial({
+  host: t.string,
+  port: t.number,
+  user: t.string,
+  password: t.string,
+  tokenValue: t.string,
+  tokenType: new TokenType(),
+});
+
+class EndevorServiceProtocolType extends t.Type<EndevorServiceProtocol> {
+  constructor() {
+    super(
+      'EndevorServiceProtocol',
+      (value): value is EndevorServiceProtocol =>
+        value === 'http' || value === 'https',
+      (value, context) =>
+        this.is(value) ? t.success(value) : t.failure(value, context),
+      (value) => value
+    );
+  }
+}
+
+export const EndevorServiceProfile = t.partial({
+  user: t.string,
+  password: t.string,
+  protocol: new EndevorServiceProtocolType(),
+  host: t.string,
+  port: t.number,
+  basePath: t.string,
+  rejectUnauthorized: t.boolean,
+});
+export const EndevorServiceProfiles = t.array(EndevorServiceProfile);
+class EndevorStageNumberType extends t.Type<EndevorStageNumber> {
+  constructor() {
+    super(
+      'EndevorStageNumber',
+      (value): value is EndevorStageNumber => value === '1' || value === '2',
+      (value, context) =>
+        this.is(value) ? t.success(value) : t.failure(value, context),
+      (value) => value
+    );
+  }
+}
+
+export const EndevorLocationProfile = t.partial({
+  instance: t.string,
+  environment: t.string,
+  stageNumber: new EndevorStageNumberType(),
+  system: t.string,
+  subsystem: t.string,
+  type: t.string,
+  ccid: t.string,
+  comment: t.string,
+});
+export const EndevorLocationProfiles = t.array(EndevorLocationProfile);
+
+export const Profile = t.union([EndevorServiceProfile, EndevorLocationProfile]);
+
+export type BfgProfile = Partial<{
+  user: string;
+  tokenValue: string;
+}>;

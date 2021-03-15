@@ -1,0 +1,3 @@
+rejectUnauthorized: false
+host: baseHost
+port: 123
